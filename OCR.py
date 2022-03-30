@@ -10,8 +10,9 @@ from scan import DocScanner
 root = tk.Tk()
 root.withdraw()
 
-# use the path to tesseract.exe on your computer
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+# Please add tesseract to the PATH before run this script
+# or, uncomment line below. 
+# pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' # use the path to tesseract.exe on your computer
 
 if __name__ == '__main__':
     path = filedialog.askopenfilename()
@@ -30,7 +31,9 @@ if __name__ == '__main__':
 
     extracted_text = pytesseract.image_to_string(img, lang='eng')
     print(extracted_text)
-    text_file = open('output/text/text_ocr.txt', 'w')
+    filename = path.split('/')[-1]
+    filename = filename[:filename.index('.')]
+    text_file = open('output/text/{}.txt'.format(filename), 'w')
     text_file.write(extracted_text)
     text_file.close()
     plt.imshow(image)
